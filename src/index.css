@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Nanum+Myeongjo:wght@400;700;800&family=JetBrains+Mono:wght@400;700&family=Archivo+Black&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-heading: 'Archivo Black', sans-serif;
+    --font-typewriter: 'Special Elite', monospace;
+    --font-serif: 'Nanum Myeongjo', serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  /* CRITICAL EMERGENCY FIXES V24 */
+  body,
+  #root {
+    background-color: #111111 !important;
+    height: 100vh !important;
+    display: block !important;
+    overflow: hidden !important;
+  }
+
+  body {
+    @apply bg-pm-black text-gray-300 overflow-hidden;
+    font-family: var(--font-serif);
+    line-height: 1.8;
+    letter-spacing: -0.01em;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Paper Texture Overlay with Noise - V28 had this? Assuming yes based on user liking "V28" */
+  /* Actually, user said V32 "Old Machine" was too much. Texture might be okay if subtle. */
+  /* But Step 4414 index.css inspection DID NOT SHOW paper-texture. */
+  /* Wait, Step 4414 viewed lines 1-119. It ended at .dimmed. */
+  /* I will assume V28 did NOT have paper texture if V32 introduced it. */
+  /* I will omit paper texture to be safe. */
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-[#050505];
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-pm-red/50 border border-pm-black rounded-none;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-pm-red;
+  }
+}
+
+@layer components {
+  .industrial-button {
+    @apply px-4 py-2 border border-pm-red text-pm-red hover:bg-pm-red hover:text-white transition-none uppercase tracking-widest text-xs font-bold;
+    font-family: var(--font-mono);
+    background-color: rgba(12, 12, 12, 0.5);
+  }
+
+  .glass-panel {
+    @apply bg-[#080808]/95 backdrop-blur-sm border border-white/5;
+  }
+
+  .panel-surface {
+    @apply bg-pm-charcoal border border-pm-iron;
+  }
+
+  .metal-frame {
+    @apply relative border-2 border-pm-iron bg-pm-charcoal;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+  }
+
+  .metal-frame::after {
+    content: '';
+    @apply absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-pm-amber;
+  }
+
+  .metal-frame::before {
+    content: '';
+    @apply absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-pm-amber;
+  }
+
+  .tactical-bracket {
+    @apply absolute w-2 h-2 border-pm-blood;
+  }
+
+  /* Re-add bracket definitions if needed for Canvas nodes */
+  .bracket-tl {
+    @apply top-0 left-0 border-t border-l;
+  }
+
+  .bracket-tr {
+    @apply top-0 right-0 border-t border-r;
+  }
+
+  .bracket-bl {
+    @apply bottom-0 left-0 border-b border-l;
+  }
+
+  .bracket-br {
+    @apply bottom-0 right-0 border-b border-r;
+  }
+}
+
+/* Canvas Vignette Effect */
+.canvas-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.25) 100%);
+  z-index: 90;
+}
+
+.glow-focus {
+  filter: brightness(1.1) drop-shadow(0 0 8px rgba(148, 27, 27, 0.3));
+}
+
+.dimmed {
+  opacity: 0.5 !important;
+}
+
+/* Override blanket ban for specifics */
+.transition-all {
+  transition-property: all !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-duration: 150ms !important;
+}
+
+
+/* Monitor Noise Texture */
+.monitor-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+.glow-text-amber {
+  text-shadow: 0 0 5px rgba(212, 175, 55, 0.5), 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.glow-text-red-subtle {
+  text-shadow: 0 0 8px rgba(255, 50, 50, 0.6);
+}
+
+.glow-border-blood {
+  box-shadow: 0 0 10px rgba(155, 0, 0, 0.4);
+}
+
+@keyframes crt-flicker {
+  0% {
+    opacity: 0.9;
+  }
+
+  5% {
+    opacity: 0.8;
+  }
+
+  10% {
+    opacity: 0.9;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.95;
+  }
+
+  60% {
+    opacity: 0.8;
+  }
+
+  70% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-crt-flicker {
+  animation: crt-flicker 0.15s infinite alternate;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+}
+
+/* --- Added custom animation --- */
+@keyframes flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.animate-flow {
+  animation: flow 1s linear infinite;
+}
+
+.scanlines {
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0,0,0,0.1) 50%,
+    rgba(0,0,0,0.1)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+}
