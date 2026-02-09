@@ -118,7 +118,6 @@ function App() {
 
   const closeTutorial = () => {
     setIsTutorialOpen(false);
-    setHasSeenTutorial(true);
     localStorage.setItem('lc-tutorial-seen', 'true');
   };
 

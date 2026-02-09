@@ -213,7 +213,7 @@ const CanvasNode = React.memo(({
 
     return !posChanged && !underlyingPosChanged &&
         prev.isSelected === next.isSelected &&
-        prev.isHighlighted === next.isHighlighted &&
+
         prev.isMuted === next.isMuted &&
         prev.isFocused === next.isFocused &&
         prev.draggingId === next.draggingId;
@@ -246,7 +246,7 @@ const Canvas: React.FC<CanvasProps> = ({
     const [dragLocalPos, setDragLocalPos] = useState<{ x: number, y: number } | null>(null);
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const [focusedNodeId, setFocusedNodeId] = useState<string | null>(null);
-    const [hoveredNodeId, _setHoveredNodeId] = useState<string | null>(null);
+
     const [canvasMode, setCanvasMode] = useState<'MANUAL' | 'AUTO'>('MANUAL');
     const [linkingFromId, setLinkingFromId] = useState<string | null>(null);
     const [mouseCoords, setMouseCoords] = useState({ x: 0, y: 0 });
@@ -510,12 +510,12 @@ const Canvas: React.FC<CanvasProps> = ({
                 {notes.map(note => (
                     <CanvasNode
                         key={note.id} note={note} lang={lang}
-                        isSelected={selectedIds.includes(note.id)} isHighlighted={false} isFocused={focusedNodeId === note.id}
+                        isSelected={selectedIds.includes(note.id)} isFocused={focusedNodeId === note.id}
                         isMuted={!!focusedNodeId && focusedNodeId !== note.id}
                         draggingId={draggingId} dragLocalPos={dragLocalPos}
                         onMouseDown={handleNodeMouseDown}
                         onContextMenu={handleNodeContextMenu}
-                        onMouseEnter={setHoveredNodeId} onMouseLeave={() => setHoveredNodeId(null)} onDoubleClick={onSelectNote}
+                        onMouseEnter={() => { }} onMouseLeave={() => { }} onDoubleClick={onSelectNote}
                     />
                 ))}
             </div>
