@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Plus,
-    Database,
+
     Trash2,
     Globe,
     Users,
@@ -161,7 +161,7 @@ const Sidebar: React.FC<SidebarProps> = ({ notes, activeNoteId, onSelectNote, on
                                                     )}
                                                     title={name}
                                                 >
-                                                    {React.cloneElement(icon as React.ReactElement, { size: 16 })}
+                                                    {React.cloneElement(icon as React.ReactElement<any>, { size: 16 })}
                                                 </button>
                                             ))}
                                         </div>
@@ -211,7 +211,7 @@ const Sidebar: React.FC<SidebarProps> = ({ notes, activeNoteId, onSelectNote, on
                                                 isActive ? "text-pm-red" : "text-[#555] group-hover:text-[#E6D69C]"
                                             )}>
                                                 {React.isValidElement(getCategoryIcon(category.icon))
-                                                    ? React.cloneElement(getCategoryIcon(category.icon) as React.ReactElement, { size: 12 })
+                                                    ? React.cloneElement(getCategoryIcon(category.icon) as React.ReactElement<any>, { size: 12 })
                                                     : <Layers size={12} />
                                                 }
                                             </div>

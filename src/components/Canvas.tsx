@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import type { LoreNote, Relationship } from '../types';
-import { Zap, Activity } from 'lucide-react';
+
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { useTypewriterAudio } from '../hooks/useTypewriterAudio';
-import QuickSearch from './QuickSearch';
+
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -42,7 +42,7 @@ const ContextMenu = ({ x, y, options, onClose }: { x: number, y: number, options
 // --- SUB-COMPONENTS ---
 // NO ZOOM/OFFSET REQUIRED: COORDINATES ARE PURE WORLD SPACE
 const CanvasEdge = React.memo(({
-    rel, startNote, endNote, isSelected, isHighlighted, isMuted
+    startNote, endNote, isSelected, isHighlighted, isMuted
 }: {
     rel: Relationship; startNote: LoreNote; endNote: LoreNote;
     isSelected: boolean; isHighlighted: boolean; isMuted: boolean;
@@ -107,9 +107,9 @@ const CanvasEdge = React.memo(({
 });
 
 const CanvasNode = React.memo(({
-    note, isSelected, isHighlighted, isFocused, isMuted, draggingId, dragLocalPos, onMouseDown, onMouseEnter, onMouseLeave, onDoubleClick, onContextMenu, lang
+    note, isSelected, isFocused, isMuted, draggingId, dragLocalPos, onMouseDown, onMouseEnter, onMouseLeave, onDoubleClick, onContextMenu, lang
 }: {
-    note: LoreNote; isSelected: boolean; isHighlighted: boolean; isFocused: boolean; isMuted: boolean; draggingId: string | null; dragLocalPos: { x: number, y: number } | null;
+    note: LoreNote; isSelected: boolean; isFocused: boolean; isMuted: boolean; draggingId: string | null; dragLocalPos: { x: number, y: number } | null;
     onMouseDown: (e: React.MouseEvent, id: string) => void;
     onMouseEnter: (id: string) => void;
     onMouseLeave: () => void;
@@ -234,7 +234,7 @@ interface CanvasProps {
 }
 
 const Canvas: React.FC<CanvasProps> = ({
-    notes, relations, onSelectNote, onUpdateNote, onAddNote, onDeleteNote, onAddRelation, onDeleteRelation, lang, activeNoteId
+    notes, relations, onSelectNote, onUpdateNote, onAddNote, onDeleteNote, onAddRelation, lang
 }) => {
     // CANVAS STATE
     const [zoom, setZoom] = useState(0.8);
@@ -246,7 +246,7 @@ const Canvas: React.FC<CanvasProps> = ({
     const [dragLocalPos, setDragLocalPos] = useState<{ x: number, y: number } | null>(null);
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const [focusedNodeId, setFocusedNodeId] = useState<string | null>(null);
-    const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
+    const [hoveredNodeId, _setHoveredNodeId] = useState<string | null>(null);
     const [canvasMode, setCanvasMode] = useState<'MANUAL' | 'AUTO'>('MANUAL');
     const [linkingFromId, setLinkingFromId] = useState<string | null>(null);
     const [mouseCoords, setMouseCoords] = useState({ x: 0, y: 0 });
@@ -254,8 +254,8 @@ const Canvas: React.FC<CanvasProps> = ({
     const [contextMenu, setContextMenu] = useState<{ x: number, y: number, type: 'CANVAS' | 'NODE', targetId?: string } | null>(null);
 
     const canvasRef = useRef<HTMLDivElement>(null);
-    const rafRef = useRef<number>();
-    const { playKeystroke, playConnect, playStatic } = useTypewriterAudio();
+    const rafRef = useRef<number>(0);
+    const { playKeystroke, playConnect } = useTypewriterAudio();
 
     // LERP & PHYSICS LOOP
     useEffect(() => {

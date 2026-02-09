@@ -17,7 +17,7 @@ import { Layers, Database, Edit3, Sidebar as SidebarIcon, Search, ShieldAlert, T
 function App() {
   // DATA LAYER
   const { notes, relations, addNote, updateNote, deleteNote, addRelation, deleteRelation, clearNotes } = useNotes();
-  const { playKeystroke, playReturn, playShutter } = useTypewriterAudio();
+  const { playKeystroke, playShutter } = useTypewriterAudio();
 
   // UI ENDPOINT STATE (Persisted)
   const [activeNoteId, setActiveNoteId] = useState<string | null>(() => localStorage.getItem('lc-active-note') || null);
@@ -26,7 +26,6 @@ function App() {
   const [isInspectorOpen, setIsInspectorOpen] = useState(() => localStorage.getItem('lc-inspector-open') !== 'false');
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => localStorage.getItem('lc-sidebar-open') !== 'false');
 
-  const [hasSeenTutorial, setHasSeenTutorial] = useState(false); // Forced to false for re-run verification
 
   // RESIZABLE PANELS STATE
   const [sidebarWidth, setSidebarWidth] = useState(() => parseInt(localStorage.getItem('lc-sidebar-width') || '256'));

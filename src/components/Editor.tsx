@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import type { LoreNote, Property, Relationship } from '../types';
-import { Edit3, Layers, Plus, Trash2, Image as ImageIcon, Volume2, VolumeX, ChevronUp, Settings, Crosshair, Scan } from 'lucide-react';
+import { Layers, Plus, Trash2, Image as ImageIcon, Volume2, VolumeX, ChevronUp, Settings, Scan } from 'lucide-react';
 import { useTypewriterAudio } from '../hooks/useTypewriterAudio';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';

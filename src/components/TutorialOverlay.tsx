@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
-import { ArrowRight, ArrowLeft, Terminal } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Terminal } from 'lucide-react';
 
 interface SpotlightTutorialProps {
     onClose: () => void;
@@ -16,7 +16,7 @@ interface Step {
 const SpotlightTutorial: React.FC<SpotlightTutorialProps> = ({ onClose, t }) => {
     const [currentStep, setCurrentStep] = useState(0);
     const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
-    const boxRef = useRef<HTMLDivElement>(null);
+
 
     // 1. DATA ACCESS
     const steps: Step[] = [
